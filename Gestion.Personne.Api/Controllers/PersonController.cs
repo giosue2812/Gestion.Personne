@@ -21,7 +21,7 @@ namespace Gestion.Personne.Api.Controllers
         /// </summary>
         /// <param name="search">sting optional</param>
         /// <returns>IEnumerable of Person</returns>
-        [HttpGet("persons/{search?}")]
+        [HttpGet("{search?}")]
         public IEnumerable<Person> GetList(string search = default)
         {
             try
@@ -59,8 +59,8 @@ namespace Gestion.Personne.Api.Controllers
         /// </summary>
         /// <param name="personForm">PersonForm</param>
         /// <returns>Guid from person created</returns>
-        [HttpPost("create")]
-        public Guid AddPersonAction(PersonForm personForm)
+        [HttpPost]
+        public Guid Post(PersonForm personForm)
         {
             try
             {
@@ -85,8 +85,8 @@ namespace Gestion.Personne.Api.Controllers
         /// <param name="personForm">PersonForm</param>
         /// <returns>bool if update is done</returns>
         /// <exception cref="Exception">An error occurred during the process</exception>
-        [HttpPost("edit/{id}")]
-        public bool Edit(Guid id, PersonForm personForm)
+        [HttpPut("{id}")]
+        public bool Put(Guid id, PersonForm personForm)
         {
             try
             {
@@ -107,7 +107,7 @@ namespace Gestion.Personne.Api.Controllers
         /// <param name="id">Guid</param>
         /// <returns>bool if deletion is done</returns>
         /// <exception cref="Exception">An error occurred during the process</exception>
-        [HttpDelete("delete/{id}")]
+        [HttpDelete("{id}")]
         public bool Delete(Guid id)
         {
             try

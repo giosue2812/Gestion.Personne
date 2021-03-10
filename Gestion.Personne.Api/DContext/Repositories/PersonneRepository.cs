@@ -69,20 +69,25 @@ namespace Gestion.Personne.Api.DContext.Repositories
         /// If parameter search is present return a person. This method should be improve.
         /// </summary>
         /// <param name="search">string</param>
-        /// <returns>IEnumerable of Person</returns>
+        /// <returns>IEnumerable of Person or a List of person</returns>
         public IEnumerable<Person> Get(string search)
         {
             if (search != null)
             {
-                string searchWord = search.ToUpper();
-                if (EF.ListPersonnes.Select(p => p.Nom.ToUpper()).Contains(searchWord))
+                List<Person> personTemp = new List<Person>();
+                foreach(Person item in EF.ListPersonnes)
                 {
-                    return EF.ListPersonnes.Where(p => p.Nom.ToUpper().Contains(searchWord));
+                    string searchWord = search.ToUpper();
+                    if (item.Nom.Contains(searchWord,StringComparison.CurrentCultureIgnoreCase))
+                    {
+                        personTemp.Add(item);
+                    }
+                    else if(item.Prenom.Contains(searchWord,StringComparison.CurrentCultureIgnoreCase))
+                    {
+                        personTemp.Add(item);
+                    }
                 }
-                else
-                {
-                    return EF.ListPersonnes.Where(p => p.Prenom.ToUpper().Contains(searchWord));
-                }
+                return personTemp;
             }
             else
             {
