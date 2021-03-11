@@ -20,11 +20,19 @@ namespace Gestion.Personne.Api.DContext.Repositories
         /// </summary>
         /// <param name="entity">Person</param>
         /// <returns>Guid of person created</returns>
+        /// <exception cref="Exception">An error occurred during the process</exception>
         public Guid Create(Person entity)
         {
-            EF.ListPersonnes.Add(entity);
-            EF.SaveChanges();
-            return entity.Id;
+            try
+            {
+                EF.ListPersonnes.Add(entity);
+                EF.SaveChanges();
+                return entity.Id;
+            }
+            catch
+            {
+                throw new Exception("An error occurred during the process");
+            }
         }
         /// <summary>
         /// Method to delete a Person who exist
@@ -70,29 +78,38 @@ namespace Gestion.Personne.Api.DContext.Repositories
         /// </summary>
         /// <param name="search">string</param>
         /// <returns>IEnumerable of Person or a List of person</returns>
+        /// <exception cref="Exception">Return an Exception : Person not exist</exception>
         public IEnumerable<Person> Get(string search)
         {
-            if (search != null)
+            try
             {
-                List<Person> personTemp = new List<Person>();
-                foreach(Person item in EF.ListPersonnes)
+                if (search != null)
                 {
-                    string searchWord = search.ToUpper();
-                    if (item.Nom.Contains(searchWord,StringComparison.CurrentCultureIgnoreCase))
+                    List<Person> personTemp = new List<Person>();
+                    foreach(Person item in EF.ListPersonnes)
                     {
-                        personTemp.Add(item);
+                        string searchWord = search.ToUpper();
+                        if (item.Nom.Contains(searchWord,StringComparison.CurrentCultureIgnoreCase))
+                        {
+                            personTemp.Add(item);
+                        }
+                        else if(item.Prenom.Contains(searchWord,StringComparison.CurrentCultureIgnoreCase))
+                        {
+                            personTemp.Add(item);
+                        }
                     }
-                    else if(item.Prenom.Contains(searchWord,StringComparison.CurrentCultureIgnoreCase))
-                    {
-                        personTemp.Add(item);
-                    }
+                    return personTemp;
                 }
-                return personTemp;
+                else
+                {
+                    return EF.ListPersonnes;
+                }
             }
-            else
+            catch
             {
-                return EF.ListPersonnes;
+                throw new Exception("An error occurred during the process");
             }
+
         }
         /// <summary>
         /// Methot to update a person

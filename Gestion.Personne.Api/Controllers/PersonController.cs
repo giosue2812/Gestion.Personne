@@ -29,9 +29,9 @@ namespace Gestion.Personne.Api.Controllers
                 IEnumerable<Person> persons = _repo.Get(search);
                 return persons;
             }
-            catch
+            catch(Exception ex)
             {
-                throw new Exception("An error occurred during the process");
+                throw new Exception(ex.Message);
             }
 
         }
@@ -72,9 +72,9 @@ namespace Gestion.Personne.Api.Controllers
                 };
                 return _repo.Create(person);
             }
-            catch
+            catch(Exception ex)
             {
-                throw new Exception("An error occurred during the process");
+                throw new Exception(ex.Message);
             }
 
         }
