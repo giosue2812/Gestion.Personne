@@ -10,7 +10,7 @@ namespace Gestion.Personne.Api.DContext.Repositories
     /// <typeparam name="TId">Type id</typeparam>
     public interface IRepository<TEntity, TId>
     {
-        TEntity Get(Guid id);
+        TEntity Get(TId id);
         TId Create(TEntity entity);
         bool Update(TEntity entity);
         bool Delete(TId id);
