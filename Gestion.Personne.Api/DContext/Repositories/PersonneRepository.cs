@@ -51,7 +51,7 @@ namespace Gestion.Personne.Api.DContext.Repositories
             }
             else
             {
-                throw new Exception("An error occurred during the process");
+                throw new Exception("Person not exist");
             }
         }
         /// <summary>
@@ -128,7 +128,7 @@ namespace Gestion.Personne.Api.DContext.Repositories
             }
             else
             {
-                throw new Exception("An error occurred during the process");
+                throw new Exception("Person not exist");
             }
         }
     }
